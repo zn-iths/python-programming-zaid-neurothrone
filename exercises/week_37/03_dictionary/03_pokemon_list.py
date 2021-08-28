@@ -1,9 +1,5 @@
 with open("../data/pokemon_list.txt", "r") as file_in:
-    in_data = file_in.readlines()
-
-
-for index, _ in enumerate(in_data):
-    in_data[index] = in_data[index].replace("\n", "").replace("\ufeff", "")
+    in_data = [line.replace("\n", "").replace("\ufeff", "") for line in file_in.readlines()]
 
 pokedex: dict[str, dict[str, int]] = dict()
 for line in in_data:

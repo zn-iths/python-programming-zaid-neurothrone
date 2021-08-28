@@ -1,14 +1,11 @@
 with open("../data/morse.txt", "r") as file_in:
-    in_data = file_in.readlines()
+    in_data = [line.replace("\n", "") for line in file_in.readlines()]
 
-for index, _ in enumerate(in_data):
-    in_data[index] = in_data[index].replace("\n", "")
-
-morse: dict[str, str] = dict()
+morse_interpreter: dict[str, str] = dict()
 
 for line in in_data:
     letter, code = line.split(": ", maxsplit=1)
-    morse[letter.lower()] = code
+    morse_interpreter[letter.lower()] = code
 
 print("---- Welcome to Morse Code Translator ----")
 while True:
@@ -17,7 +14,7 @@ while True:
     try:
         for letter in message.lower():
             if letter.isalpha():
-                translation.append(morse[letter].lower())
+                translation.append(morse_interpreter[letter].lower())
             elif letter.isspace():
                 translation.append(" ")
         print(f"Translation: {''.join(translation)}")

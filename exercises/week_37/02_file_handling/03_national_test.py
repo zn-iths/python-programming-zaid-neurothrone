@@ -4,12 +4,11 @@ import matplotlib.pyplot as plt
 
 def get_clean_data(file_path: str) -> dict[str, float]:
     with open(file_path, mode="r") as file_in:
-        in_data = file_in.readlines()
+        in_data = [line.replace("\n", "").replace("%", "") for line in file_in.readlines()]
     out_data: dict[str, float] = dict()
 
-    for index, _ in enumerate(in_data):
-        in_data[index] = in_data[index].replace("\n", "").replace("%", "")
-        grade, score = in_data[index].split(" ", maxsplit=1)
+    for line in in_data:
+        grade, score = line.split(" ", maxsplit=1)
         out_data[grade] = float(score)
 
     return out_data
