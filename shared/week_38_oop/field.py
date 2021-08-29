@@ -42,7 +42,7 @@ class Field(ABC):
                f"with a value of {self.resource}."
 
     def __repr__(self) -> str:
-        return f"{self.name}({self.resource})"
+        return f"{self.__class__.__name__}({self.type}, {self.resource})"
 
     def produce(self) -> None:
         """Adds the current value of the resource with the production rate"""

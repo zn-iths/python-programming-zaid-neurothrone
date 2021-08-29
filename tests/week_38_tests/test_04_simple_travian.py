@@ -12,19 +12,19 @@ from shared.week_38_oop.warehouse import Warehouse
 class TestSimpleTravian(unittest.TestCase):
     def test_subclasses_repr(self):
         clay = Clay()
-        self.assertEqual(clay.__repr__(), "Clay(0)")
+        self.assertEqual(clay.__repr__(), "Clay(clay, 0)")
         self.assertNotEqual(clay.__repr__(), "Field(0)")
 
         crop = Crop()
-        self.assertEqual(crop.__repr__(), "Crop(0)")
+        self.assertEqual(crop.__repr__(), "Crop(crop, 0)")
         self.assertNotEqual(crop.__repr__(), "Field(0)")
 
         iron = Iron()
-        self.assertEqual(iron.__repr__(), "Iron(0)")
+        self.assertEqual(iron.__repr__(), "Iron(iron, 0)")
         self.assertNotEqual(iron.__repr__(), "Field(0)")
 
         lumber = Lumber()
-        self.assertEqual(lumber.__repr__(), "Lumber(0)")
+        self.assertEqual(lumber.__repr__(), "Lumber(lumber, 0)")
         self.assertNotEqual(lumber.__repr__(), "Field(0)")
 
     def test_warehouse_exceed_stock(self):
