@@ -21,11 +21,11 @@ def process_data(in_data: list[str]) -> list[tuple[float, float]]:
 
 def clean_data(data_in: str) -> list[tuple[float, float]]:
     data_in = data_in.replace("(", "").split("),")
-    data_in = [data.replace(" ", "").replace(")", "") for data in data_in]
+    data_in = [data_.replace(" ", "").replace(")", "") for data_ in data_in]
 
     cleaned_data = []
-    for data in data_in:
-        str_values = data.split(",")
+    for data_ in data_in:
+        str_values = data_.split(",")
         values: tuple[float, float] = (float(str_values[0]), float(str_values[1]))
         cleaned_data.append(values)
     return cleaned_data
@@ -40,8 +40,20 @@ def get_distances(reference_point: tuple[float, float],
     return distances
 
 
+def scatter_plot(title: str, labels: tuple[str], plot_data: list[dict]) -> None:
+    plt.title(title)
+    plt.xlabel(labels[0])
+    plt.ylabel(labels[1])
+
+    for data_dict in plot_data:
+        x_points, y_points = zip(*data_dict["points"])
+        plt.scatter(x_points, y_points, color=data_dict["color"], label=data_dict["label"])
+
+    plt.legend(loc="lower right")
+    plt.show()
+
+
 if __name__ == "__main__":
-    # TODO: 1. read in data and save to appropriate data structures
     pichu_data = load_in_data("data/pichu.txt")
     pichu_labels = pichu_data.pop(0).replace("\n", "")
     cleaned_pichu_data = process_data(pichu_data)
@@ -50,35 +62,29 @@ if __name__ == "__main__":
     pikachu_labels = pikachu_data.pop(0).replace("\n", "")
     cleaned_pikachu_data = process_data(pikachu_data)
 
-    # TODO: 2. plot all points with different colors in the same window
-    plot_labels = pichu_labels.removeprefix("(").removesuffix(")").split(", ")
-    plt.title("Pichu vs Pikachu Data Points")
-    plt.xlabel(plot_labels[0])
-    plt.ylabel(plot_labels[1])
-
-    POINT_SCALE = 50
-
-    # TODO: 2.a) plot pichu
-    pichu_x_points, pichu_y_points = zip(*cleaned_pichu_data)
-    plt.scatter(pichu_x_points, pichu_y_points, color="red", label="Pichu", s=POINT_SCALE)
-
-    # TODO: 2.b) plot pikachu
-    pikachu_x_points, pikachu_y_points = zip(*cleaned_pikachu_data)
-    plt.scatter(pikachu_x_points, pikachu_y_points, color="blue", label="Pikachu", s=POINT_SCALE)
-
-    # TODO: 3. read in test points
     test_data = load_in_data("data/test_points.txt")
     cleaned_test_data = process_data(test_data)
 
-    test_x_points, test_y_points = zip(*cleaned_test_data)
-    plt.scatter(test_x_points, test_y_points, color="green", label="Test")
+    data = [
+        {
+            "color": "red",
+            "label": "Pichu",
+            "points": cleaned_pichu_data
+        },
+        {
+            "color": "blue",
+            "label": "Pikachu",
+            "points": cleaned_pikachu_data
+        },
+        {
+            "color": "green",
+            "label": "Test",
+            "points": cleaned_test_data
+        }
+    ]
+    plot_labels = tuple(pichu_labels.removeprefix("(").removesuffix(")").split(", "))
+    scatter_plot(title="Pichu vs Pikachu Data Points", labels=plot_labels, plot_data=data)
 
-    plt.legend(loc="lower right")
-    plt.show()
-
-    # TODO: 4. compare distance between each test point and other points
-    #       - find min of test point vs pichu points
-    #       - find min of test point vs pikachu points
     for test_point in cleaned_test_data:
         pichu_distances = get_distances(test_point, cleaned_pichu_data)
         pikachu_distances = get_distances(test_point, cleaned_pikachu_data)
@@ -86,9 +92,5 @@ if __name__ == "__main__":
         pichu_min = min(pichu_distances)
         pikachu_min = min(pikachu_distances)
 
-        # TODO: 5. classification
-        #       - does the point belong to Pichu?
-        #       - YES -> classify as Pichu
-        #       - NO  -> classify as Pikachu
         print(f"Sample with (width, height): {test_point} classified as ", end="")
         print("Pichu" if pichu_min < pikachu_min else "Pikachu")
