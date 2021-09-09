@@ -1,6 +1,7 @@
 from matplotlib import pyplot as plt
 
 from shared.mathematics.distance import euclidean_distance
+from shared.input.integer import get_int_input
 
 
 def load_in_data(path: str) -> list[str]:
@@ -53,7 +54,10 @@ def scatter_plot(title: str, labels: tuple[str], plot_data: list[dict]) -> None:
     plt.show()
 
 
-if __name__ == "__main__":
+def run_test_program():
+    user_input = input("Also plot graph? (y/n): ").lower()
+    is_plotting = True if user_input == "y" else False
+
     pichu_data = load_in_data("data/pichu.txt")
     pichu_labels = pichu_data.pop(0).replace("\n", "")
     cleaned_pichu_data = process_data(pichu_data)
@@ -65,25 +69,26 @@ if __name__ == "__main__":
     test_data = load_in_data("data/test_points.txt")
     cleaned_test_data = process_data(test_data)
 
-    data = [
-        {
-            "color": "red",
-            "label": "Pichu",
-            "points": cleaned_pichu_data
-        },
-        {
-            "color": "blue",
-            "label": "Pikachu",
-            "points": cleaned_pikachu_data
-        },
-        {
-            "color": "green",
-            "label": "Test",
-            "points": cleaned_test_data
-        }
-    ]
-    plot_labels = tuple(pichu_labels.removeprefix("(").removesuffix(")").split(", "))
-    scatter_plot(title="Pichu vs Pikachu Data Points", labels=plot_labels, plot_data=data)
+    if is_plotting:
+        data = [
+            {
+                "color": "red",
+                "label": "Pichu",
+                "points": cleaned_pichu_data
+            },
+            {
+                "color": "blue",
+                "label": "Pikachu",
+                "points": cleaned_pikachu_data
+            },
+            {
+                "color": "green",
+                "label": "Test",
+                "points": cleaned_test_data
+            }
+        ]
+        plot_labels = tuple(pichu_labels.removeprefix("(").removesuffix(")").split(", "))
+        scatter_plot(title="Pichu vs Pikachu Data Points", labels=plot_labels, plot_data=data)
 
     for test_point in cleaned_test_data:
         pichu_distances = get_distances(test_point, cleaned_pichu_data)
@@ -94,3 +99,49 @@ if __name__ == "__main__":
 
         print(f"Sample with (width, height): {test_point} classified as ", end="")
         print("Pichu" if pichu_min < pikachu_min else "Pikachu")
+
+
+def run_input_program():
+    print("Input program called")
+
+
+def print_help() -> None:
+    print("Help called")
+
+
+def print_menu() -> None:
+    print("\n---- Menu ----")
+    print("1. Run test program")
+    print("2. Run input program")
+    print("3. Help")
+    print("0. Quit")
+    print("--------------\n")
+
+
+def menu(selection: int) -> None:
+    if selection == 1:
+        run_test_program()
+    elif selection == 2:
+        run_input_program()
+    elif selection == 3:
+        print_help()
+
+
+def run():
+    print("Starting Pichu vs Pikachu Classifier...")
+
+    is_running = True
+    while is_running:
+        print_menu()
+        selection = get_int_input("Enter selection: ", min_=0, max_=3)
+        if (is_running := selection) != 0:
+            menu(selection)
+    print("Terminating program...")
+
+
+def main():
+    run()
+
+
+if __name__ == "__main__":
+    main()
