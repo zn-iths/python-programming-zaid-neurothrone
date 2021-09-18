@@ -3,6 +3,7 @@ from plotter import draw_user_scatter_plot
 from processer import load_in_data
 from processer import process_data
 from shared.input import get_float_input
+from shared.input import get_int_input
 from shared.mathematics.distance import euclidean_distance
 
 
@@ -63,7 +64,8 @@ def run_test_program() -> None:
                 "label": "Test",
                 "points": cleaned_test_data
             })
-        draw_test_scatter_plot(title="Pichu vs Pikachu Data Points", labels=headers, plot_data=data)
+        draw_test_scatter_plot(title="Pichu vs Pikachu Classification by proximity",
+                               labels=headers, plot_data=data)
 
     classify(cleaned_test_data)
 
@@ -80,8 +82,8 @@ def run_input_program() -> None:
                 "label": "User",
                 "point": user_point
             }
-        draw_user_scatter_plot(title="Pichu vs Pikachu Data Points", labels=headers,
-                               plot_data=data, user_data=user_data)
+        draw_user_scatter_plot(title="Pichu vs Pikachu Classification by proximity",
+                               labels=headers, plot_data=data, user_data=user_data)
 
     classify([user_point])
 
@@ -92,12 +94,34 @@ def is_plotting() -> bool:
 
 
 def classify(data: list[tuple[float, float]]) -> None:
+    max_points = len(cleaned_pichu_data) + len(cleaned_pikachu_data)
+    # set the amount of closest points to collect before classifying
+    accuracy = get_int_input("Set accuracy (5 is recommended): ", min_=1, max_=max_points)
+
     for point in data:
+        closest_points = []
+
         pichu_distances = get_distances(point, cleaned_pichu_data)
         pikachu_distances = get_distances(point, cleaned_pikachu_data)
 
-        pichu_min = min(pichu_distances)
-        pikachu_min = min(pikachu_distances)
+        # sort distances from closest to farthest
+        pichu_distances.sort()
+        pikachu_distances.sort()
 
+        iteration = 0
+        for pichu_point, pikachu_point in zip(pichu_distances, pikachu_distances):
+            if pichu_point < pikachu_point:
+                closest_points.append("pichu")
+            else:
+                closest_points.append("pikachu")
+
+            iteration += 1
+            if iteration == accuracy:
+                break
+
+        # classify point by the majority of pichu or pikachu points closest
         print(f"Sample with (width, height): {point} classified as ", end="")
-        print("Pichu" if pichu_min < pikachu_min else "Pikachu")
+        if closest_points.count("pichu") > closest_points.count("pikachu"):
+            print("Pichu")
+        else:
+            print("Pikachu")

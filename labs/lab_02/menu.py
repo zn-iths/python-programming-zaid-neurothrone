@@ -22,10 +22,12 @@ def print_menu() -> None:
     print("--------------\n")
 
 
+MENU = {
+    1: run_test_program,
+    2: run_input_program,
+    3: print_help
+}
+
+
 def menu(selection: int) -> None:
-    if selection == 1:
-        run_test_program()
-    elif selection == 2:
-        run_input_program()
-    elif selection == 3:
-        print_help()
+    MENU[selection]()
