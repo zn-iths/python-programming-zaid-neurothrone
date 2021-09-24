@@ -2,6 +2,7 @@ from abc import ABC
 from abc import abstractmethod
 
 from position import Position
+from validation import validate_input
 
 
 # TODO: docstrings
@@ -21,15 +22,11 @@ class Shape(ABC):
     def __str__(self):
         return f"{self.__class__.__name__} object in the position {self.position}"
 
-    def translate_x(self, distance: float) -> None:
-        """Translates the object horizontally."""
-        # TODO: ValueError e.g. str
-        self.position.x += distance
-
-    def translate_y(self, distance: float) -> None:
-        """Translates the object vertically."""
-        # TODO: ValueError e.g. str
-        self.position.y += distance
+    def translate(self, distance_x: float, distance_y: float) -> None:
+        """Translates the object horizontally and vertically."""
+        validate_input(self.__class__.__name__, [distance_x, distance_y])
+        self.position.x += distance_x
+        self.position.y += distance_y
 
     @abstractmethod
     def area(self) -> float:

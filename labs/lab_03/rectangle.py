@@ -47,7 +47,6 @@ class Rectangle(Shape):
         return self.width * 2 + self.length * 2
 
     def is_inside(self, position: Position) -> bool:
-        # TODO: implement by width and length
         min_x = self.position.x - self.width / 2
         max_x = self.position.x + self.width / 2
         min_y = self.position.y - self.length / 2
