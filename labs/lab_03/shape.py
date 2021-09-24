@@ -6,6 +6,7 @@ from validation import validate_input
 
 
 # TODO: docstrings
+# TODO: decorator to test input on all methods/functions that receive args? raise Exception if invalid
 
 
 class Shape(ABC):

@@ -5,6 +5,8 @@ from shape import Shape
 from validation import validate_input
 from validation import validate_scalars
 
+from shared.mathematics.distance import euclidean_distance
+
 
 class Circle(Shape):
     def __init__(self, x: float, y: float, radius: float) -> None:
@@ -38,8 +40,8 @@ class Circle(Shape):
         return 2 * pi * self.radius
 
     def is_inside(self, position: Position) -> bool:
-        # TODO: implement with the help of radius
-        pass
+        distance = euclidean_distance(position.values, self.position.values)
+        return distance < self.radius
 
     @staticmethod
     def is_radius_valid(radius: float) -> bool:
