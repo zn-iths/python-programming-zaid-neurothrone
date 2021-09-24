@@ -16,11 +16,6 @@ def main():
     print(circle1.is_inside(Position(0.5, 0.5)))
     circle1.translate("Three", 5)
 
-    # circle3 = Circle(2, 1, "test")
-    # print(circle3)
-    # rectangle3 = Rectangle("a", 1, 2, 3)
-    # print(rectangle3)
-
 
 if __name__ == "__main__":
     main()
