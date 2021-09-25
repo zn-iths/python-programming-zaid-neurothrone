@@ -3,9 +3,10 @@ from typing import Callable
 
 
 # TODO: attempt to refactor code (repeated three times)
-# TODO: docstrings
 
 class Validator:
+    """A Validator class with useful validation decorators."""
+
     def __init__(self, func: Callable) -> None:
         self.func = func
 
@@ -16,6 +17,16 @@ class Validator:
     def init_args_type(expected_types: tuple,
                        exclude: bool = False,
                        indices: list[int] = None):
+        """Decorator type validator for objects __init__() method.
+
+         Raises a TypeError exception for input that do not match the
+         expected types.
+
+        Args:
+            expected_types (tuple[type]): the expected data types of the args.
+            exclude (bool): whether to exclude one or more args when validating.
+            indices (list[int]): the indices to exclude from the args passed in.
+        """
 
         def decorator(func: Callable):
             @wraps(func)
@@ -33,7 +44,14 @@ class Validator:
     @staticmethod
     def init_args_negative(exclude: bool = False,
                            indices: list[int] = None):
-        """Validator that raises a ValueError exception for values that are zero or less."""
+        """Decorator value validator for objects __init__() method.
+
+         Raises a ValueError exception for numerical values that are negative.
+
+        Args:
+            exclude (bool): whether to exclude one or more args when validating.
+            indices (list[int]): the indices to exclude from the args passed in.
+        """
 
         def decorator(func: Callable):
             @wraps(func)
@@ -52,6 +70,17 @@ class Validator:
     def args_type(expected_types: tuple,
                   exclude: bool = False,
                   indices: list[int] = None):
+        """Decorator type validator for any function method.
+
+         Raises a TypeError exception for input that do not match the
+         expected types.
+
+        Args:
+            expected_types (tuple[type]): the expected data types of the args.
+            exclude (bool): whether to exclude one or more args when validating.
+            indices (list[int]): the indices to exclude from the args passed in.
+        """
+
         def decorator(func: Callable):
             @wraps(func)
             def wrapper(*args, **kwargs):
