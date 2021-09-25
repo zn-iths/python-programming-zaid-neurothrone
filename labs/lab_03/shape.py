@@ -38,7 +38,7 @@ class Shape(ABC):
     def __str__(self):
         return f"{self.__class__.__name__} object in the position {self.position}"
 
-    @Validator.args_type(exclude=True, indices=[0])
+    @Validator.args_type(expected_types=(float, int), exclude=True, indices=[0])
     def translate(self, distance_x: float, distance_y: float) -> None:
         """Translates the object horizontally and vertically.
 

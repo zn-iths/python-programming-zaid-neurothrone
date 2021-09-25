@@ -23,7 +23,7 @@ class Rectangle(Shape):
     """
 
     @Validator.init_args_negative(exclude=True, indices=[0, 1])
-    @Validator.init_args_type(exclude=False)
+    @Validator.init_args_type(expected_types=(float, int), exclude=False)
     def __init__(self, x: float, y: float, width: float, length: float) -> None:
         super().__init__(x, y)
         self.width = width
