@@ -14,7 +14,11 @@ def main():
     print(circle1.is_inside(Position(0.5, 0.5)))
     circle1.translate(5, 5)
     print(circle1.is_inside(Position(0.5, 0.5)))
-    circle1.translate("Three", 5)
+
+    try:
+        circle1.translate("Three", 5)
+    except TypeError as err:
+        print(err)
 
 
 if __name__ == "__main__":
