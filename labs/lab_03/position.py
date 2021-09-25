@@ -1,4 +1,11 @@
 class Position:
+    """The Position object has (x, y) Cartesian coordinates.
+
+    Args:
+        x (float): the position on the x axis.
+        y (float): the position on the y axis.
+    """
+
     def __init__(self, x: float, y: float) -> None:
         self.x = x
         self.y = y
@@ -30,4 +37,10 @@ class Position:
 
     @property
     def values(self) -> tuple[float, float]:
+        """Returns the objects x and y properties as a tuple.
+
+        Returns:
+            tuple[float, float]: a tuple of two floats.
+        """
+
         return self.x, self.y

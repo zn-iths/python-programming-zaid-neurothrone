@@ -1,13 +1,30 @@
 from position import Position
 from shape import Shape
-from validation import validate_input
-from validation import validate_scalars
+from validation import Validator
 
 
 class Rectangle(Shape):
+    """The Rectangle object has a position, width, length, circumference and an area.
+
+    The Rectangle object represents a rectangular shape with a
+    position of (x, y) in the Cartesian coordinate system and
+    is composed of the sides width and length.
+
+    Args:
+        x (float): the position on the x axis.
+        y (float): the position on the y axis.
+        width (float): a scalar quantity of a width.
+        length (float): a scalar quantity of a length.
+
+    Attributes:
+        position (Position): the (x, y) Cartesian coordinates.
+        width (float): the width of the rectangle.
+        length (float): a length of the rectangle.
+    """
+
+    @Validator.init_args_negative(exclude=True, indices=[0, 1])
+    @Validator.init_args_type(exclude=False)
     def __init__(self, x: float, y: float, width: float, length: float) -> None:
-        validate_input(self.__class__.__name__, [x, y, width, length])
-        validate_scalars(self.__class__.__name__, [width, length])
         super().__init__(x, y)
         self.width = width
         self.length = length
