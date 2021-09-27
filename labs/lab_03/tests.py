@@ -1,4 +1,6 @@
+import contextlib
 from math import pi
+import os
 from typing import Union
 import unittest
 
@@ -56,10 +58,10 @@ class TestShapeClasses(unittest.TestCase):
 
         r1 = Rectangle(x=0, y=0, width=2, length=2)
         c1 = Circle(x=0, y=0, radius=2)
-        self.assertEqual(2 * 2, r1.area())
-        self.assertEqual(2 * r1.width + 2 * r1.length, r1.circumference())
-        self.assertEqual(pi * c1.radius ** 2, c1.area())
-        self.assertEqual(pi * 2 * c1.radius, c1.circumference())
+        self.assertEqual(2 * 2, r1.area)
+        self.assertEqual(2 * r1.width + 2 * r1.length, r1.circumference)
+        self.assertEqual(pi * c1.radius ** 2, c1.area)
+        self.assertEqual(pi * 2 * c1.radius, c1.circumference)
 
     def test_polymorphism(self):
         """Test polymorphism of Shape subclasses without raising an exception."""
@@ -84,9 +86,13 @@ class TestShapeClasses(unittest.TestCase):
             Rectangle(x=0, y=0, width=2, length=2)
         ]
 
-        for shape in shapes:
-            print(shape.area())
-            print(shape.circumference())
+        # don't want to "actually" print anything to test console
+        # NOTE: should be cross-platform compatible, however,can only
+        # confirm that this work on linux
+        with open(os.devnull, "w") as out, contextlib.redirect_stdout(out):
+            for shape in shapes:
+                print(shape.area)
+                print(shape.circumference)
 
 
 def main():
