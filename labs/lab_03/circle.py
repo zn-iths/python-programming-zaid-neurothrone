@@ -48,9 +48,11 @@ class Circle(Shape):
     def radius(self, value) -> None:
         self._radius = value
 
+    @property
     def area(self) -> float:
         return pi * self.radius ** 2
 
+    @property
     def circumference(self) -> float:
         return 2 * pi * self.radius
 

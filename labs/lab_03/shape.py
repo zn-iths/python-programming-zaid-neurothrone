@@ -50,6 +50,7 @@ class Shape(ABC):
         self.position.x += distance_x
         self.position.y += distance_y
 
+    @property
     @abstractmethod
     def area(self) -> float:
         """Returns the area of the Shape object.
@@ -59,6 +60,7 @@ class Shape(ABC):
         """
         pass
 
+    @property
     @abstractmethod
     def circumference(self) -> float:
         """Returns the circumference of the Shape object.

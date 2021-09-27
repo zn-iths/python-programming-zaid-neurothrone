@@ -2,6 +2,8 @@ from circle import Circle
 from rectangle import Rectangle
 from position import Position
 
+# TODO: change out area, circumference methods to properties? More explicit?
+
 
 def main():
     circle1 = Circle(0, 0, 1)

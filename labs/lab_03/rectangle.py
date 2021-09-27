@@ -57,9 +57,11 @@ class Rectangle(Shape):
     def length(self, value) -> None:
         self._length = value
 
+    @property
     def area(self) -> float:
         return self.width * self.length
 
+    @property
     def circumference(self) -> float:
         return self.width * 2 + self.length * 2
 
