@@ -79,6 +79,12 @@ class TestShapeClasses(unittest.TestCase):
 
     @staticmethod
     def polymorphism_test_variance(test_variable: Union[float, int, str]) -> None:
+        """Creates Shape objects, iterates through them and prints their area and circumference.
+
+        Args:
+            test_variable (Union[float, int, str]): a test variable that can be a float, int or str.
+        """
+
         shapes = [
             Circle(x=0, y=0, radius=test_variable),
             Circle(x=1, y=1, radius=1),
