@@ -5,7 +5,7 @@ from menu import print_menu
 from shared.input import get_int_input
 
 
-def run() -> None:
+def main() -> None:
     setup_baseline()
     print("Starting Pichu vs Pikachu Classifier...")
 
@@ -16,10 +16,6 @@ def run() -> None:
         if (is_running := selection) != 0:
             menu(selection)
     print("Terminating program...")
-
-
-def main() -> None:
-    run()
 
 
 if __name__ == "__main__":
